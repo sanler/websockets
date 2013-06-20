@@ -5,11 +5,16 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
+  , user = require('./routes/index')
   , http = require('http')
   , path = require('path');
 
 var app = express();
+//*********************************************************************
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
+
+//*********************************************************************
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -28,8 +33,39 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+
+//app.get('/chat',  routes.index);
+
+io.sockets.on('connection', function(socket){
+    socket.emit('connected','conectado'); //Evento creado por nosotros se puede llamar 'pepito'
+
+    socket.on('my other event', function (data) {
+       console.log(data);
+   });
+    socket.on('user message', function(data){
+        console.log(data);
+
+      io.sockets.emit('user message',data);
+
+    });
+});
+
+//***************************************************************
+//io.sockets.on('connection', function (socket) {
+//    socket.emit('news','HOLA');
+//    socket.on('my other event', function (data) {
+//        console.log(data);
+//    });
+//});
+//***************************************************************
+  //esta esperando los mensajes que pueda enviar el usuario y cuando ocurre los reenvía a todos los demás usuarios con emit.
+
+//io.sockets.on('user message', function(data){
+//  data.emit('user message',data);
+//
+//});
+
+server.listen(app.get('port'), function(){
+    console.log('Express server listening on port ' + app.get('port'));
 });

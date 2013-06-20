@@ -3,3 +3,60 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+
+        div Escribe un mensaje
+        br
+        div
+            textarea(id='message')
+            button(id='boton') Enviar mensaje
+
+
+        p(id='messages')
+
+    script
+      var socket = io.connect();
+      $(document).ready(function () {
+
+         socket.on('connected', function (data) {
+            console.log(data);
+            socket.emit('my other event',"ADIOS");
+         });
+
+         $('#boton').click(function () {
+            socket.emit('user message',$('#message').val());
+            $('#message').val('').focus();
+         });
+
+         //muestra los mensajes que el servidor ha mandado con emit
+       socket.on('user message', function (data) {
+            $('#messages').append(data);
+            });
+
+      });
+
+
+        //socket.on('news', function (data) {
+        //    console.log(data);
+        //    socket.emit('my other event',"ADIOS");
+        //     });
+
+       //$('#send-message').submit(function(){
+       //     socket.emit('user mesasge', $('message').val() );
+       //     $('#message').val('').focus();
+       //     return false;
+       //     });
+
+
+
+
+
+
+       //var socket = io.connect('http://localhost');
+       //socket.on('message', function (data) {
+       //   $('#chat').append(data.text + '<br />');
+       //});
+
+
+
+
