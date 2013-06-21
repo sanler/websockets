@@ -12,7 +12,7 @@ block content
             button(id='boton') Enviar mensaje
 
 
-        p(id='messages')
+        div(id='messages')
 
     script
       var socket = io.connect();
@@ -30,7 +30,7 @@ block content
 
          //muestra los mensajes que el servidor ha mandado con emit
        socket.on('user message', function (data) {
-            $('#messages').append(data);
+            $('#messages').append('<p>' + data + '</p>');
             });
 
       });
@@ -46,10 +46,6 @@ block content
        //     $('#message').val('').focus();
        //     return false;
        //     });
-
-
-
-
 
 
        //var socket = io.connect('http://localhost');

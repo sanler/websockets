@@ -46,7 +46,9 @@ io.sockets.on('connection', function(socket){
     socket.on('user message', function(data){
         console.log(data);
 
-      io.sockets.emit('user message',data);
+    var result=(data.replace('<','&lt;')).replace('>','&gt;');
+
+    io.sockets.emit('user message',result);
 
     });
 });
