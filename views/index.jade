@@ -2,7 +2,8 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+
+  p Welcome to #{title} :smile:
 
 
         div Escribe un mensaje
@@ -17,7 +18,16 @@ block content
     script
       var socket = io.connect();
       $(document).ready(function () {
-
+         emojify.setConfig({
+          emojify_tag_type: 'div',
+          emoticons_enabled: true,
+          people_enabled: true,
+          nature_enabled: true,
+          objects_enabled: true,
+          places_enabled: true,
+          symbols_enabled: true
+          });
+          emojify.run();
          socket.on('connected', function (data) {
             console.log(data);
             socket.emit('my other event',"ADIOS");
@@ -25,12 +35,26 @@ block content
 
          $('#boton').click(function () {
             socket.emit('user message',$('#message').val());
+
             $('#message').val('').focus();
          });
 
          //muestra los mensajes que el servidor ha mandado con emit
+               emojify.setConfig({
+                                           emojify_tag_type: 'div',
+                                           emoticons_enabled: true,
+                                           people_enabled: true,
+                                           nature_enabled: true,
+                                           objects_enabled: true,
+                                           places_enabled: true,
+                                           symbols_enabled: true
+                                           });
+
        socket.on('user message', function (data) {
+
             $('#messages').append('<p>' + data + '</p>');
+            emojify.run();
+
             });
 
       });
@@ -52,6 +76,10 @@ block content
        //socket.on('message', function (data) {
        //   $('#chat').append(data.text + '<br />');
        //});
+
+
+      //});
+
 
 
 
