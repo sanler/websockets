@@ -4,9 +4,13 @@ html
         title Primera plantilla Jade
         script(src='/socket.io/socket.io.js')
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.js')
+        style(type='text/css')
+        link( rel='stylesheet', type='text/css', href='stylesheets/emojify.min.css')
+        script( src='javascripts/emojify.js')
+
         body
             h1
-                Nuestra primera plantilla Jade
+                Nuestra primera plantilla Jade :blush:
             #contenedor
                 block content
 
