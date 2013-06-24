@@ -2,7 +2,8 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+
+  p Welcome to #{title} :smile:
 
 
         div Escribe un mensaje
@@ -11,48 +12,44 @@ block content
             textarea(id='message')
             button(id='boton') Enviar mensaje
 
+        div
+           a(href='http://www.emoji-cheat-sheet.com/') emoji Guide
+
 
         div(id='messages')
 
     script
-      var socket = io.connect();
-      $(document).ready(function () {
-
-         socket.on('connected', function (data) {
-            console.log(data);
-            socket.emit('my other event',"ADIOS");
-         });
-
-         $('#boton').click(function () {
-            socket.emit('user message',$('#message').val());
-            $('#message').val('').focus();
-         });
-
-         //muestra los mensajes que el servidor ha mandado con emit
-       socket.on('user message', function (data) {
-            $('#messages').append('<p>' + data + '</p>');
+        var socket = io.connect();
+        var emoji_set_up = function() {
+            emojify.setConfig({
+                emojify_tag_type: 'div',
+                emoticons_enabled: true,
+                people_enabled: true,
+                nature_enabled: true,
+                objects_enabled: true,
+                places_enabled: true,
+                symbols_enabled: true
+            });
+            emojify.run();
+        };
+        $(document).ready(function () {
+            emoji_set_up();
+            socket.on('connected', function (data) {
+                console.log(data);
+                socket.emit('my other event',"ADIOS");
             });
 
-      });
+            $('#boton').click(function () {
+                socket.emit('user message',$('#message').val());
+                $('#message').val('').focus();
+            });
 
 
-        //socket.on('news', function (data) {
-        //    console.log(data);
-        //    socket.emit('my other event',"ADIOS");
-        //     });
+            socket.on('user message', function (data) {
+                $('#messages').append('<p>' + data + '</p>');
+                emojify.runOverElement($('#messages')[0]);
+            });
 
-       //$('#send-message').submit(function(){
-       //     socket.emit('user mesasge', $('message').val() );
-       //     $('#message').val('').focus();
-       //     return false;
-       //     });
-
-
-       //var socket = io.connect('http://localhost');
-       //socket.on('message', function (data) {
-       //   $('#chat').append(data.text + '<br />');
-       //});
-
-
+        });
 
 
