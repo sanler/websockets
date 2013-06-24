@@ -51,6 +51,14 @@ io.sockets.on('connection', function(socket){
     io.sockets.emit('user message',result);
 
     });
+
+    socket.on('user nick', function(data){
+
+        var result2=(data.replace('<','&lt;')).replace('>','&gt;');
+
+        io.sockets.emit('user nick',result2);
+
+    });
 });
 
 //***************************************************************
