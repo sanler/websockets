@@ -9,7 +9,11 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
+//var redis = require('redis')
+//    , client = redis.createClient();
+
 var app = express();
+
 //*********************************************************************
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);

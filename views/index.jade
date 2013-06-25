@@ -6,18 +6,17 @@ block content
   p Welcome to #{title} :smile:
 
         p Escribe un nick
-            textarea(id='nick')
+            input(type="text", id='nick', maxlength="20", size="20")
 
         p Escribe un mensaje
-            textarea(id='message')
+            input(type="text",id='message', maxlength="100", size="100")
 
         div
            a(href='http://www.emoji-cheat-sheet.com/') emoji Guide
 
-
         p
-
             i(id='messages')
+
     script
         var socket = io.connect();
         var emoji_set_up = function() {
@@ -78,7 +77,6 @@ block content
             emojify.runOverElement($('#messages')[0]);
 
             });
-
 
             });
 
