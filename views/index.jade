@@ -5,27 +5,19 @@ block content
 
   p Welcome to #{title} :smile:
 
-
-        div Escribe un mensaje
-        br
-        div
-            textarea(id='message')
-
-
-        div Escribe un nick
-        br
-        div
+        p Escribe un nick
             textarea(id='nick')
 
-
+        p Escribe un mensaje
+            textarea(id='message')
 
         div
            a(href='http://www.emoji-cheat-sheet.com/') emoji Guide
 
-        div(id='nicks')
-        div(id='messages')
 
+        p
 
+            i(id='messages')
     script
         var socket = io.connect();
         var emoji_set_up = function() {
@@ -51,7 +43,9 @@ block content
         var key = e.keyCode || e.which;
         if (key === 13) {
 
-        socket.emit('user message',$('#message').val());
+        socket.emit('user message',{'msg': $('#message').val(), 'nick':$('#nick').val()});
+
+
         $('#message').val('').focus();
 
             };
@@ -61,15 +55,14 @@ block content
             //    $('#message').val('').focus();
             //});
 
-        $('#nick').bind('keyup', function (e) {
-        var key = e.keyCode || e.which;
-        if (key === 13) {
-
-        socket.emit('user nick',$('#nick').val());
-        $('#nick').val('').focus();
-
-            };
-        });
+        //$('#nick').bind('keyup', function (e) {
+        //var key = e.keyCode || e.which;
+        //if (key === 13) {
+        //
+        //socket.emit('user nick',$('#nick').val());
+        //
+        //    };
+        //});
 
             //$('#boton2').click(function () {
             //    socket.emit('user nick',$('#nick').val());
@@ -77,18 +70,16 @@ block content
             //});
 
             socket.on('user message', function (data) {
-                $('#messages').append('<p>' + data + '</p>');
-                emojify.runOverElement($('#messages')[0]);
+
+             console.log(data);
+
+            $('#messages').append('<b>'+data.nick+': </b>'+data.msg+'<br>');
+
+            emojify.runOverElement($('#messages')[0]);
+
             });
 
-            socket.on('user nick', function (data) {
-             $('#nicks').append('<p><B>' + data + '</B></p>');
 
-                       });
-
-
-
-
-        });
+            });
 
 

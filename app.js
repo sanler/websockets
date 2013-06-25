@@ -44,21 +44,23 @@ io.sockets.on('connection', function(socket){
        console.log(data);
    });
     socket.on('user message', function(data){
-        console.log(data);
 
-    var result=(data.replace('<','&lt;')).replace('>','&gt;');
+    console.log(data);
 
-    io.sockets.emit('user message',result);
+    //var result=(data.replace('<','&lt;')).replace('>','&gt;');
 
-    });
-
-    socket.on('user nick', function(data){
-
-        var result2=(data.replace('<','&lt;')).replace('>','&gt;');
-
-        io.sockets.emit('user nick',result2);
+    io.sockets.emit('user message',data);
 
     });
+
+//    socket.on('user nick', function(data){
+//
+//        var result2=(data.replace('<','&lt;')).replace('>','&gt;');
+//
+//        io.sockets.emit('user nick',result2);
+//
+//    });
+
 });
 
 //***************************************************************
