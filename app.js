@@ -9,7 +9,11 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
+//var redis = require('redis')
+//    , client = redis.createClient();
+
 var app = express();
+
 //*********************************************************************
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
@@ -44,13 +48,23 @@ io.sockets.on('connection', function(socket){
        console.log(data);
    });
     socket.on('user message', function(data){
-        console.log(data);
 
-    var result=(data.replace('<','&lt;')).replace('>','&gt;');
+    console.log(data);
 
-    io.sockets.emit('user message',result);
+    //var result=(data.replace('<','&lt;')).replace('>','&gt;');
+
+    io.sockets.emit('user message',data);
 
     });
+
+//    socket.on('user nick', function(data){
+//
+//        var result2=(data.replace('<','&lt;')).replace('>','&gt;');
+//
+//        io.sockets.emit('user nick',result2);
+//
+//    });
+
 });
 
 //***************************************************************

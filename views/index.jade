@@ -5,18 +5,17 @@ block content
 
   p Welcome to #{title} :smile:
 
+        p Escribe un nick
+            input(type="text", id='nick', maxlength="20", size="20")
 
-        div Escribe un mensaje
-        br
-        div
-            textarea(id='message')
-            button(id='boton') Enviar mensaje
+        p Escribe un mensaje
+            input(type="text",id='message', maxlength="100", size="100")
 
         div
            a(href='http://www.emoji-cheat-sheet.com/') emoji Guide
 
-
-        div(id='messages')
+        p
+            i(id='messages')
 
     script
         var socket = io.connect();
@@ -39,17 +38,46 @@ block content
                 socket.emit('my other event',"ADIOS");
             });
 
-            $('#boton').click(function () {
-                socket.emit('user message',$('#message').val());
-                $('#message').val('').focus();
-            });
+        $('#message').bind('keyup', function (e) {
+        var key = e.keyCode || e.which;
+        if (key === 13) {
 
+        socket.emit('user message',{'msg': $('#message').val(), 'nick':$('#nick').val()});
+
+
+        $('#message').val('').focus();
+
+            };
+        });
+            //$('#boton').click(function () {
+            //    socket.emit('user message',$('#message').val());
+            //    $('#message').val('').focus();
+            //});
+
+        //$('#nick').bind('keyup', function (e) {
+        //var key = e.keyCode || e.which;
+        //if (key === 13) {
+        //
+        //socket.emit('user nick',$('#nick').val());
+        //
+        //    };
+        //});
+
+            //$('#boton2').click(function () {
+            //    socket.emit('user nick',$('#nick').val());
+            //    $('#nick').val('').focus();
+            //});
 
             socket.on('user message', function (data) {
-                $('#messages').append('<p>' + data + '</p>');
-                emojify.runOverElement($('#messages')[0]);
+
+             console.log(data);
+
+            $('#messages').append('<b>'+data.nick+': </b>'+data.msg+'<br>');
+
+            emojify.runOverElement($('#messages')[0]);
+
             });
 
-        });
+            });
 
 
