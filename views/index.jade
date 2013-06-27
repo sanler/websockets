@@ -14,10 +14,16 @@ block content
         div
            a(href='http://www.emoji-cheat-sheet.com/') emoji Guide
 
+      each mensaje in mensajes
+          p #{mensaje.nick} : #{mensaje.msg}
+
+        p
+            i(id='mensajes')
         p
             i(id='messages')
 
     script
+        var i = 0;
         var socket = io.connect();
         var emoji_set_up = function() {
             emojify.setConfig({
@@ -31,24 +37,45 @@ block content
             });
             emojify.run();
         };
-        $(document).ready(function () {
-            emoji_set_up();
-            socket.on('connected', function (data) {
-                console.log(data);
-                socket.emit('my other event',"ADIOS");
-            });
 
-        $('#message').bind('keyup', function (e) {
-        var key = e.keyCode || e.which;
-        if (key === 13) {
-
-        socket.emit('user message',{'msg': $('#message').val(), 'nick':$('#nick').val()});
+                $(document).ready(function () {
+                    emoji_set_up();
 
 
-        $('#message').val('').focus();
+                    //client.on('connect', runSample);
 
-            };
-        });
+                    socket.on('mensajes', function (data) {
+
+
+                    $('#mensajes').append('<b>'+JSON.parse(data).nick+': </b>'+JSON.parse(data).msg+'<br>');
+                    });
+
+                    socket.on('connected', function (data) {
+
+                       console.log(data);
+                    });
+
+                $('#message').bind('keyup', function (e) {
+                var key = e.keyCode || e.which;
+                if (key === 13) {
+
+                socket.emit('user message',{'msg': $('#message').val(), 'nick':$('#nick').val()});
+                         //Se guarda el mensaje
+                    //client.set(0, {'msg': $('#message').val(), 'nick':$('#nick').val()}, redis.print);
+
+                    //if(i<5){
+                    //i++;
+                    //}else{
+                    //i=0;
+                    //}
+
+                    console.log(i);
+
+                $('#message').val('').focus();
+
+                    };
+                });
+
             //$('#boton').click(function () {
             //    socket.emit('user message',$('#message').val());
             //    $('#message').val('').focus();
@@ -69,8 +96,6 @@ block content
             //});
 
             socket.on('user message', function (data) {
-
-             console.log(data);
 
             $('#messages').append('<b>'+data.nick+': </b>'+data.msg+'<br>');
 
