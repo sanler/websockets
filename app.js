@@ -9,15 +9,30 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
-var redis = require('redis')
-    , client = redis.createClient(6379, '10.95.150.224');
+
 
 var app = express();
 var i=0;
 
+
+
 //*********************************************************************
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
+//*********************************************************************
+
+var fs = require('fs'),
+nconf = require('nconf');
+
+nconf.file({ file: './config.json' });
+
+nconf.defaults({
+    'port': '6379',
+    'host': '10.95.150.224'
+});
+
+var redis = require('redis')
+    , client = redis.createClient(nconf.get('port'), nconf.get('host'));
 //*********************************************************************
 
 // all environments
@@ -40,6 +55,15 @@ app.get('/', routes.index);
 
 
 //app.get('/chat',  routes.index);
+//************************************************************************
+
+
+//
+// Save the configuration object to disk
+//
+
+
+//************************************************************************
 
 io.sockets.on('connection', function(socket){
     socket.emit('connected','conectado'); //Evento creado por nosotros se puede llamar 'pepito'

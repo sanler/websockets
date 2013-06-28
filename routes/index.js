@@ -3,8 +3,18 @@
  * GET home page.
  */
 
+var fs = require('fs'),
+    nconf = require('nconf');
+
+nconf.file({ file: '../config.json' });
+
+nconf.defaults({
+    'port': '6379',
+    'host': '10.95.150.224'
+});
+
 var redis = require('redis')
-    , client = redis.createClient(6379, '10.95.150.224');
+    , client = redis.createClient(nconf.get('port'), nconf.get('host'));
 
 var i=0;
 var arrays=[];
