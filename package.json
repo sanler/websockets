@@ -9,6 +9,8 @@
     "express": "3.2.6",
     "jade": "*",
     "socket.io": "~0.9.16",
-    "redis": "~0.8.3"
+    "redis": "~0.8.3",
+    "nconf": "*",
+    "async": "*"
   }
 }
