@@ -15,7 +15,8 @@ block content
            a(href='http://www.emoji-cheat-sheet.com/') emoji Guide
 
       each mensaje in mensajes
-          p #{mensaje.nick} : #{mensaje.msg}
+          if mensaje
+            p #{mensaje.nick} : #{mensaje.msg}
 
         p
             i(id='mensajes')
