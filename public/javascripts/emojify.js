@@ -939,17 +939,17 @@
       // Sane defaults
       defaultConfig: {
         emojify_tag_type: 'div',
-        emoticons_enabled: true,
-        people_enabled: false,
-        nature_enabled: false,
-        objects_enabled: false,
-        places_enabled: false,
-        symbols_enabled: false
+        emoticons_enabled: false,
+        people_enabled: true,
+        nature_enabled: true,
+        objects_enabled: true,
+        places_enabled: true,
+        symbols_enabled: true
       },
 
       setConfig: function (newConfig) {
         this.defaultConfig.emojify_tag_type = typeof newConfig.emojify_tag_type !== 'undefined' ? newConfig.emojify_tag_type : this.defaultConfig.emojify_tag_type;
-        this.defaultConfig.emoticons_enabled = typeof newConfig.emoticons_enabled !== 'undefined' ? newConfig.emoticons_enabled : this.defaultConfig.emoticons_enabled;
+       // this.defaultConfig.emoticons_enabled = typeof newConfig.emoticons_enabled !== 'undefined' ? newConfig.emoticons_enabled : this.defaultConfig.emoticons_enabled;
         this.defaultConfig.people_enabled = typeof newConfig.people_enabled !== 'undefined' ? newConfig.people_enabled : this.defaultConfig.people_enabled;
         this.defaultConfig.nature_enabled = typeof newConfig.nature_enabled !== 'undefined' ? newConfig.nature_enabled : this.defaultConfig.nature_enabled;
         this.defaultConfig.objects_enabled = typeof newConfig.objects_enabled !== 'undefined' ? newConfig.objects_enabled : this.defaultConfig.objects_enabled;
@@ -966,7 +966,7 @@
         if (this.defaultConfig.objects_enabled) selected_sets.push(objects.slice());
         if (this.defaultConfig.places_enabled) selected_sets.push(places.slice());
         if (this.defaultConfig.symbols_enabled) selected_sets.push(symbols.slice());
-        if (this.defaultConfig.emoticons_enabled) selected_sets.push(emoticons.slice());
+      //  if (this.defaultConfig.emoticons_enabled) selected_sets.push(emoticons.slice());
 
         // Iterate through selected icon sets
         for (var index = 0; index < selected_sets.length; index++) {
@@ -996,7 +996,7 @@
         if (this.defaultConfig.objects_enabled) selected_sets.push(objects.slice());
         if (this.defaultConfig.places_enabled) selected_sets.push(places.slice());
         if (this.defaultConfig.symbols_enabled) selected_sets.push(symbols.slice());
-        if (this.defaultConfig.emoticons_enabled) selected_sets.push(emoticons.slice());
+       // if (this.defaultConfig.emoticons_enabled) selected_sets.push(emoticons.slice());
 
         // Iterate through selected icon sets
         for (var index = 0; index < selected_sets.length; index++) {

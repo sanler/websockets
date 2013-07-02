@@ -8,13 +8,13 @@ var fs = require('fs'),
 
 var async = require('async');
 
-nconf.file({ file: './config.json' });
+nconf.file({ file: './/config.json' });
 
-nconf.defaults({
-    'port': '6379',
-    'host': '10.95.150.224',
-    'msg_cache_count': 5
-});
+//nconf.defaults({
+//    'port': '6379',
+//    'host': '10.95.150.224',
+//    'msg_cache_count': 5
+//});
 
 var redis = require('redis')
     , client = redis.createClient(nconf.get('port'), nconf.get('host'));

@@ -3,12 +3,12 @@ extends layout
 block content
   h1= title
 
-  p Welcome to #{title} :smile:
+  p
 
-        p Escribe un nick
+        p :boy: Escribe un nick
             input(type="text", id='nick', maxlength="20", size="20")
 
-        p Escribe un mensaje
+        p :speech_balloon: Escribe un mensaje
             input(type="text",id='message', maxlength="100", size="100")
 
         div
@@ -16,12 +16,12 @@ block content
 
       each mensaje in mensajes
           if mensaje
-            p #{mensaje.nick} : #{mensaje.msg}
+            p(class="triangle-isosceles") #{mensaje.msg}
+                p(style="margin-left: 55px;margin-top:-40px") #{mensaje.nick}
 
-        p
-            i(id='mensajes')
-        p
-            i(id='messages')
+
+
+      div(id='messages')
 
     script
         var i = 0;
@@ -98,7 +98,7 @@ block content
 
             socket.on('user message', function (data) {
 
-            $('#messages').append('<b>'+data.nick+': </b>'+data.msg+'<br>');
+            $('#messages').append('<p class="triangle-isosceles">'+data.msg+'</p><p style="margin-left: 55px;margin-top:-40px;"><b>'+data.nick+'</b></p>');
 
             emojify.runOverElement($('#messages')[0]);
 
